@@ -8,10 +8,12 @@ const theme: DefaultTheme = {
   shadowColor: 'rgba(0,0,0,0.2)',
   accent: '#42ffdf',
   surface: '#ffffff',
+  text: '#000000',
   component: {
     normal: '#ededed',
     hover: '#e3e3e3',
     active: '#d4d4d4',
+    text: '#000000',
   },
 };
 
