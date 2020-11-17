@@ -43,12 +43,14 @@ const ProductList: React.FC = React.memo(() => {
   const renderList = () => {
     switch (products.state) {
       case 'hasValue':
-        return (
+        return products.contents.products.length > 0 ? (
           <List>
             {products.contents.products.map((p) => (
               <ProductListItem key={p.id} product={p} />
             ))}
           </List>
+        ) : (
+          <span>🕵️‍♀️ No products matched your search criteria</span>
         );
       case 'loading':
         return <span>Loading...</span>;

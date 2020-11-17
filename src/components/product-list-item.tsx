@@ -2,48 +2,82 @@ import React from 'react';
 import styled from 'styled-components';
 import Availability from '../types/Availability';
 import Product from '../types/Product';
-
-const availabilityColors: Record<Availability, string> = {
-  INSTOCK: '#00f23d',
-  LESSTHAN10: '#f2a500',
-  OUTOFSTOCK: '#f24500',
-  UNKNOWN: '#8b8b8b',
-};
+import { formatCurrency } from '../utils/formatUtils';
+import Alert from './alert';
 
 interface ProductListItemProps {
   product: Product;
 }
 
 const ListItem = styled.li`
-  display: flex;
+  display: grid;
+  grid-template-columns: 32px 2fr 4fr 1fr 1fr 2fr;
   align-items: center;
   height: 1.5rem;
   padding: 2px 0;
   gap: 1ch;
 `;
 
-const NameSpan = styled.span`
-  flex-grow: 1fr;
-`;
-
-const AvailabilitySpan = styled.span`
-  flex-grow: 1fr;
-  border-radius: ${({ theme }) => theme.borderRadius};
-
-  &::before {
-    content: '';
-    padding: 0.4em;
-    border-radius: 50%;
-    display: inline-block;
-    background-color: ${availabilityColors.INSTOCK};
-    margin-right: 0.5ch;
+const ColorPreview = styled.div`
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: solid 2px ${({ theme }) => theme.component.normal};
+  transition: border-radius 0.1s, transform 0.1s;
+  &:hover {
+    border-radius: ${({ theme }) => theme.borderRadius};
+    transform: scale(1.1);
   }
 `;
 
+const ColorList = styled.div``;
+
+const Column = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const AlertColumn = styled(Column)`
+  display: flex;
+  justify-content: center;
+`;
+
+const CurrencyColumn = styled(Column)`
+  text-align: right;
+`;
+
+const availabilityColors: Record<Availability, string> = {
+  INSTOCK: 'green',
+  LESSTHAN10: 'orange',
+  OUTOFSTOCK: 'red',
+  UNKNOWN: 'purple',
+};
+
+const availabilityLabels: Record<Availability, string> = {
+  INSTOCK: 'in stock',
+  LESSTHAN10: '< 10 in stock',
+  OUTOFSTOCK: 'out of stock',
+  UNKNOWN: 'unknown',
+};
+
 const ProductListItem: React.FC<ProductListItemProps> = ({ product }) => (
   <ListItem>
-    <NameSpan>{product.name}</NameSpan>
-    <AvailabilitySpan>{product.availability}</AvailabilitySpan>
+    <AlertColumn>
+      {product.availability !== 'INSTOCK' ? (
+        <Alert color={availabilityColors[product.availability]} />
+      ) : null}
+    </AlertColumn>
+    <Column>{availabilityLabels[product.availability]}</Column>
+    <Column>{product.name}</Column>
+    <CurrencyColumn>{formatCurrency(product.price)}</CurrencyColumn>
+    <Column>{product.manufacturer}</Column>
+    <ColorList>
+      {product.color.map((c) => (
+        <ColorPreview title={c} style={{ backgroundColor: c }} />
+      ))}
+    </ColorList>
   </ListItem>
 );
 
