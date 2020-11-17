@@ -1,7 +1,10 @@
-const currencyFormatter = new Intl.NumberFormat([navigator.language, 'fi-FI'], {
-  style: 'currency',
-  currency: 'EUR',
-});
+const currencyFormatter = new Intl.NumberFormat(
+  [typeof navigator === 'object' ? navigator.language : 'fi-FI', 'fi-FI'],
+  {
+    style: 'currency',
+    currency: 'EUR',
+  },
+);
 
 /**
  * Format number as euro currency by the browser's country's formatting
