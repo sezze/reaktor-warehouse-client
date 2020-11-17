@@ -18,7 +18,7 @@ const Selection = styled.div`
   width: 50%;
   z-index: -1;
   transition-duration: 0.2s;
-  border-bottom: solid 2px ${({ theme }) => theme.palette.accent.alt.bg}; ;
+  border-bottom: solid 2px ${({ theme }) => theme.accent}; ;
 `;
 
 const Button = styled.button`

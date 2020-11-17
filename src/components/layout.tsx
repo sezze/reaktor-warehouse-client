@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import lightTheme from '../constants/light-theme';
 import Header from './header';
-import '../reset.css';
+import '../styles/reset.css';
 
 const GlobalStyle = createGlobalStyle`
   body {

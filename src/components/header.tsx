@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaGithub } from 'react-icons/fa';
 
 const HeaderContainer = styled.header`
-  background-color: ${({ theme }) => theme.palette.surface.alt.bg};
+  background-color: ${({ theme }) => theme.surface};
   box-shadow: ${({ theme }) => theme.shadow(2)};
   padding: 1rem;
   position: fixed;

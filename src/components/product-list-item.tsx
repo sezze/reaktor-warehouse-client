@@ -23,7 +23,7 @@ const ColorPreview = styled.div`
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  border: solid 2px ${({ theme }) => theme.palette.component.main.bg};
+  border: solid 2px ${({ theme }) => theme.component.normal};
   transition: border-radius 0.1s, transform 0.1s;
   &:hover {
     border-radius: ${({ theme }) => theme.borderRadius};
