@@ -9,6 +9,7 @@ const theme: DefaultTheme = {
   accent: '#42ffdf',
   surface: '#ffffff',
   text: '#000000',
+  placeholderColor: 'rgba(90,90,90,0.25)',
   component: {
     normal: '#ededed',
     hover: '#e3e3e3',

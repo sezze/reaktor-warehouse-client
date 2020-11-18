@@ -7,6 +7,8 @@ import productQueryState from '../store/productQueryState';
 import productListState from '../store/productListState';
 import ProductListItem from './product-list-item';
 import Pagination from './pagination';
+import Placeholder from '../styles/placeholder';
+import { range } from '../utils/mathUtils';
 
 const Container = styled.div`
   max-width: 100%;
@@ -60,7 +62,18 @@ const ProductList: React.FC = React.memo(() => {
           <span>🕵️‍♀️ No products matched your search criteria</span>
         );
       case 'loading':
-        return <div>Loading...</div>;
+        return (
+          <List>
+            {range(10).map((i) => (
+              <Placeholder
+                key={i}
+                height="1.5rem"
+                width="calc(100% - 4rem)"
+                margin="0.25rem 2rem"
+              />
+            ))}
+          </List>
+        );
       case 'hasError':
         return <div>😢 An error occurred.</div>;
     }

@@ -4,6 +4,7 @@ import { Button } from '../styles/input';
 import { range } from '../utils/mathUtils';
 
 interface PaginationProps {
+  dummy?: boolean;
   page: number;
   pageCount: number;
   maxButtonCount?: number;
@@ -12,7 +13,7 @@ interface PaginationProps {
 
 const Container = styled.div`
   height: 2rem;
-  display: flex;
+  display: inline-flex;
 `;
 
 const ListButton = styled(Button)`
@@ -36,7 +37,7 @@ const ListButton = styled(Button)`
 `;
 
 const Pagination: React.FC<PaginationProps> = React.memo(
-  ({ page, pageCount, maxButtonCount = 7, onChange = () => {} }) => {
+  ({ page, pageCount, maxButtonCount = 7, onChange = () => {}, dummy }) => {
     const buttonCount = Math.min(pageCount, maxButtonCount);
     const leftCount = Math.ceil(buttonCount / 2) - 1;
     const rightCount = Math.floor(buttonCount / 2);
@@ -64,7 +65,7 @@ const Pagination: React.FC<PaginationProps> = React.memo(
     return (
       <Container>
         {leftLimit > 0 ? (
-          <ListButton data-page={1} onClick={handleSelection}>
+          <ListButton disabled={dummy} data-page={1} onClick={handleSelection}>
             &lt;&lt;
           </ListButton>
         ) : null}
@@ -72,14 +73,18 @@ const Pagination: React.FC<PaginationProps> = React.memo(
           <ListButton
             data-page={n}
             onClick={handleSelection}
-            disabled={n === page}
+            disabled={n === page || dummy}
             key={n}
           >
             {n + 1}
           </ListButton>
         ))}
         {rightLimit < pageCount - 1 ? (
-          <ListButton data-page={pageCount - 1} onClick={handleSelection}>
+          <ListButton
+            disabled={dummy}
+            data-page={pageCount - 1}
+            onClick={handleSelection}
+          >
             &gt;&gt;
           </ListButton>
         ) : null}

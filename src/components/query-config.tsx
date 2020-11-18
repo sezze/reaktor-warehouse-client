@@ -10,6 +10,7 @@ import { Select, TextInput } from '../styles/input';
 import SelectionArea from './selection-area';
 import Pagination from './pagination';
 import pageCountState from '../store/pageCountState';
+import Placeholder from '../styles/placeholder';
 
 const Grid = styled.div`
   display: grid;
@@ -69,7 +70,9 @@ const QueryConfig: React.FC = () => {
           pageCount={pageCount.contents}
           onChange={setPage}
         />
-      ) : null}
+      ) : (
+        <Pagination page={config.page} pageCount={99999} dummy />
+      )}
     </Grid>
   );
 };
