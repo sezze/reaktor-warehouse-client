@@ -1,7 +1,7 @@
 import { apiUrl } from '../constants/config';
-import ProductQueryConfg from '../types/ProductQueryConfig';
+import ProductQueryProps from '../types/ProductQueryProps';
 
-const toQuery = ({ from, to, search, availability }: ProductQueryConfg) =>
+const toQuery = ({ from, to, search, availability }: ProductQueryProps) =>
   new URLSearchParams({
     from: from?.toString() ?? '0',
     to: to?.toString() ?? '100',
@@ -12,5 +12,5 @@ const toQuery = ({ from, to, search, availability }: ProductQueryConfg) =>
 /**
  * Fetch products from the new API. The API has a 5 minute cache.
  */
-export const fetchProducts = (config: ProductQueryConfg) =>
+export const fetchProducts = (config: ProductQueryProps) =>
   fetch(`${apiUrl}/products/${config.category}?${toQuery(config)}`);

@@ -1,10 +1,10 @@
 import Availability from './Availability';
 import Category from './Category';
 
-export default interface ProductQueryConfg {
+export default interface ProductQueryProps {
   category: Category;
-  page: number;
-  displayCount: number;
+  from?: number;
+  to?: number;
   search?: string;
   availability?: Availability;
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { addTransitionEndListerner } from '../utils/animationUtils';
 import productQueryState from '../store/productQueryState';
 import productListState from '../store/productListState';
 import ProductListItem from './product-list-item';
+import Pagination from './pagination';
 
 const Container = styled.div`
   max-width: 100%;
@@ -37,32 +38,38 @@ const Container = styled.div`
 const List = styled.ul``;
 
 const ProductList: React.FC = React.memo(() => {
-  const { category } = useRecoilValue(productQueryState);
+  const [config, setConfig] = useRecoilState(productQueryState);
   const products = useRecoilValueLoadable(productListState);
+
+  const handlePageSelection = (page: number) => {
+    setConfig({ ...config, page });
+  };
 
   const renderList = () => {
     switch (products.state) {
       case 'hasValue':
         return products.contents.products.length > 0 ? (
-          <List>
-            {products.contents.products.map((p) => (
-              <ProductListItem key={p.id} product={p} />
-            ))}
-          </List>
+          <div>
+            <List>
+              {products.contents.products.map((p) => (
+                <ProductListItem key={p.id} product={p} />
+              ))}
+            </List>
+          </div>
         ) : (
           <span>🕵️‍♀️ No products matched your search criteria</span>
         );
       case 'loading':
-        return <span>Loading...</span>;
+        return <div>Loading...</div>;
       case 'hasError':
-        return <span>😢 An error occurred.</span>;
+        return <div>😢 An error occurred.</div>;
     }
   };
 
   return (
     <SwitchTransition>
       <CSSTransition
-        key={products.state + category}
+        key={products.state + config.category + config.page}
         addEndListener={addTransitionEndListerner}
         classNames="fade"
       >
