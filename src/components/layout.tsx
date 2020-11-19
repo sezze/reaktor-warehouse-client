@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import cookies from 'js-cookie';
-import Header from './header';
-import '../styles/reset.css';
 import { useRecoilState } from 'recoil';
 import themeState from '../store/themeState';
 import darkTheme from '../constants/dark-theme';
 import lightTheme from '../constants/light-theme';
+import Header from './header';
+import '../styles/reset.css';
 
 const GlobalStyle = createGlobalStyle`
   body {

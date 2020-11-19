@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import categories from '../constants/categories';
-import productQueryState from '../store/productQueryState';
-import Category from '../types/Category';
 import { Select, TextInput } from '../styles/input';
-import SelectionArea from './selection-area';
+import productQueryState from '../store/productQueryState';
 import useLazyCallback from '../hooks/useLazyCallback';
 import displayOptions from '../constants/display-options';
+import SelectionArea from './selection-area';
+import categories from '../constants/categories';
+import Category from '../types/Category';
 import Availability from '../types/Availability';
 
 const Grid = styled.div`

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
-import sizes from '../constants/sizes';
 import { useRecoilState } from 'recoil';
+import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
 import themeState from '../store/themeState';
 import lightTheme from '../constants/light-theme';
 import darkTheme from '../constants/dark-theme';
+import sizes from '../constants/sizes';
 
 const HeaderContainer = styled.header`
   padding: 1rem;

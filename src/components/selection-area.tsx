@@ -44,6 +44,7 @@ const SelectionArea: React.FC<SelecitonAreaProps> = ({
   const [region, setRegion] = useState([0, 20]);
   const selectedButton = useRef<HTMLButtonElement>(null);
 
+  // Update underline effect
   useEffect(() => {
     setRegion([
       selectedButton.current?.offsetLeft || 0,
@@ -55,7 +56,7 @@ const SelectionArea: React.FC<SelecitonAreaProps> = ({
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       onChange(e.currentTarget.value);
     },
-    [],
+    [onChange],
   );
 
   return (
