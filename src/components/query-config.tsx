@@ -29,7 +29,9 @@ const Cell = styled.div<CellProps>`
   flex-direction: column;
   justify-content: flex-end;
   grid-column: auto / span ${({ small }) => (small ? 1 : 2)};
-  gap: 1ch;
+  label {
+    margin-bottom: 6px;
+  }
 `;
 
 const QueryConfig: React.FC = React.memo(() => {

@@ -9,8 +9,11 @@ import styled from 'styled-components';
 const MainContent = styled(Content)`
   display: flex;
   flex-direction: column;
-  gap: 8px;
   margin-bottom: 2rem;
+
+  > :not(:last-child) {
+    margin-bottom: 16px;
+  }
 `;
 
 const IndexPage: React.FC = () => {
