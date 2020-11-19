@@ -33,6 +33,7 @@ const Button = styled.button`
   outline: none;
   padding: 0.25rem 0.75rem;
   font-size: 1rem;
+  color: ${({ theme }) => theme.component.text};
 `;
 
 const SelectionArea: React.FC<SelecitonAreaProps> = ({
