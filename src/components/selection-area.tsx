@@ -7,8 +7,13 @@ interface SelecitonAreaProps {
   onChange?: (option: string) => void;
 }
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: inline-flex;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;
   position: relative;
 `;
 
@@ -53,19 +58,21 @@ const SelectionArea: React.FC<SelecitonAreaProps> = ({
   );
 
   return (
-    <Container>
-      <Selection style={{ left: region[0], width: region[1] }} />
-      {options.map((o) => (
-        <Button
-          ref={o === value ? selectedButton : undefined}
-          key={o}
-          value={o}
-          onClick={handleOnClick}
-        >
-          {o}
-        </Button>
-      ))}
-    </Container>
+    <Wrapper>
+      <Container>
+        <Selection style={{ left: region[0], width: region[1] }} />
+        {options.map((o) => (
+          <Button
+            ref={o === value ? selectedButton : undefined}
+            key={o}
+            value={o}
+            onClick={handleOnClick}
+          >
+            {o}
+          </Button>
+        ))}
+      </Container>
+    </Wrapper>
   );
 };
 

@@ -40,7 +40,6 @@ const Container = styled.div<ContainerProps>`
   width: 1em;
   height: 1em;
   position: relative;
-  margin: 0 0.15em;
   > ${Circle} {
     background-color: ${({ bgcolor }) => bgcolor};
   }

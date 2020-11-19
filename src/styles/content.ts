@@ -17,7 +17,7 @@ const Content = styled.div`
   }
 
   @media ${sizes.extraLarge} {
-    width: 1000px;
+    width: 900px;
   }
 `;
 

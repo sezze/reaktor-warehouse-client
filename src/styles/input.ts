@@ -5,7 +5,7 @@ export const TextInput = styled.input`
   ${componentBase}
   ${inputBase}
   padding: 0.25rem 0.5rem;
-  &:focus {
+  &:not(:disabled):focus {
     background-color: ${({ theme }) => theme.surface};
   }
 `;
@@ -20,4 +20,10 @@ export const Select = styled.select`
       border-bottom-right-radius: 0;
     }
   }
+`;
+
+export const Button = styled.button`
+  ${componentBase}
+  ${inputBase}
+  padding: 0.25rem 0.5rem;
 `;
