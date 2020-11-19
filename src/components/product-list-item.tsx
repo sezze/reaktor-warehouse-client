@@ -15,7 +15,8 @@ const ListItem = styled.li`
   display: grid;
   align-items: center;
   height: 2rem;
-  padding: 2px 0;
+  padding: 0;
+  margin: 0;
   gap: 1ch;
   grid-template-columns: 1rem 100px 1fr;
   box-sizing: border-box;
@@ -120,6 +121,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({ product }) => (
       <ColorList>
         {product.color.map((c) => (
           <ColorPreview
+            key={c}
             title={c}
             style={{ backgroundColor: colorPreviewPalette[c] ?? c }}
           />

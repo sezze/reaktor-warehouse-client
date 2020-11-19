@@ -14,6 +14,7 @@ interface PaginationProps {
 const Container = styled.div`
   height: 2rem;
   display: inline-flex;
+  justify-content: center;
 `;
 
 const ListButton = styled(Button)`

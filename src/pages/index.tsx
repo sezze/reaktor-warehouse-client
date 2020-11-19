@@ -4,15 +4,23 @@ import Layout from '../components/layout';
 import Content from '../styles/content';
 import ProductList from '../components/product-list';
 import QueryConfig from '../components/query-config';
+import styled from 'styled-components';
+
+const MainContent = styled(Content)`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 2rem;
+`;
 
 const IndexPage: React.FC = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <Content>
+      <MainContent>
         <QueryConfig />
         <ProductList />
-      </Content>
+      </MainContent>
     </Layout>
   );
 };

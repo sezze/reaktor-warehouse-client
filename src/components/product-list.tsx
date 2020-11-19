@@ -1,95 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { addTransitionEndListerner } from '../utils/animationUtils';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import productQueryState from '../store/productQueryState';
 import productListState from '../store/productListState';
 import ProductListItem from './product-list-item';
-import Pagination from './pagination';
 import Placeholder from '../styles/placeholder';
 import { range } from '../utils/mathUtils';
+import Product from '../types/Product';
 
 const Container = styled.div`
   max-width: 100%;
-  margin: 1rem 0;
-
-  transition-duration: 2s;
-  &.fade-enter {
-    opacity: 0;
-    transform: translateX(-32px);
-  }
-  &.fade-enter-active {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-  &.fade-exit {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-  &.fade-exit-active {
-    opacity: 0;
-    transform: translateX(32px);
-  }
-  &.fade-enter-active,
-  &.fade-exit-active {
-    transition: opacity 200ms, transform 200ms;
-  }
 `;
 
-const List = styled.ul``;
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+`;
+
+const GhostContainer = styled.div`
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.7;
+`;
+
+const renderProductList = (products: Product[]) => (
+  <List>
+    {products.map((p) => (
+      <ProductListItem key={p.id} product={p} />
+    ))}
+  </List>
+);
+
+const renderPlaceholderList = (count: number) => (
+  <List>
+    {range(count).map((i) => (
+      <Placeholder
+        key={i}
+        height="1rem"
+        width="calc(90% - 1rem)"
+        margin="0.5rem 0 0.5rem calc(1rem + 1ch)"
+      />
+    ))}
+  </List>
+);
 
 const ProductList: React.FC = React.memo(() => {
-  const [config, setConfig] = useRecoilState(productQueryState);
+  const [cachedProducts, setCachedProducts] = useState<Product[] | undefined>();
+  const config = useRecoilValue(productQueryState);
   const products = useRecoilValueLoadable(productListState);
 
-  const handlePageSelection = (page: number) => {
-    setConfig({ ...config, page });
-  };
+  useEffect(() => {
+    if (products.state === 'hasValue') {
+      setCachedProducts(products.contents.products);
+    }
+  }, [products]);
 
   const renderList = () => {
     switch (products.state) {
       case 'hasValue':
         return products.contents.products.length > 0 ? (
-          <div>
-            <List>
-              {products.contents.products.map((p) => (
-                <ProductListItem key={p.id} product={p} />
-              ))}
-            </List>
-          </div>
+          renderProductList(products.contents.products)
         ) : (
           <span>🕵️‍♀️ No products matched your search criteria</span>
         );
       case 'loading':
-        return (
-          <List>
-            {range(10).map((i) => (
-              <Placeholder
-                key={i}
-                height="1.5rem"
-                width="calc(100% - 4rem)"
-                margin="0.25rem 2rem"
-              />
-            ))}
-          </List>
+        return cachedProducts && cachedProducts.length > 0 ? (
+          <GhostContainer>{renderProductList(cachedProducts)}</GhostContainer>
+        ) : (
+          renderPlaceholderList(config.displayCount)
         );
       case 'hasError':
         return <div>😢 An error occurred.</div>;
     }
   };
 
-  return (
-    <SwitchTransition>
-      <CSSTransition
-        key={products.state + config.category + config.page}
-        addEndListener={addTransitionEndListerner}
-        classNames="fade"
-      >
-        <Container>{renderList()}</Container>
-      </CSSTransition>
-    </SwitchTransition>
-  );
+  return <Container>{renderList()}</Container>;
 });
 
 export default ProductList;
