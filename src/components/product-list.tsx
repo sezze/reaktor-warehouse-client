@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import productQueryState from '../store/productQueryState';
 import productListState from '../store/productListState';
 import ProductListItem from './product-list-item';
 import Placeholder from '../styles/placeholder';
 import { range } from '../utils/mathUtils';
 import Product from '../types/Product';
+import Pagination from './pagination';
+import pageCountState from '../store/pageCountState';
 
 const Container = styled.div`
   max-width: 100%;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const List = styled.ul`
@@ -46,14 +53,33 @@ const renderPlaceholderList = (count: number) => (
 
 const ProductList: React.FC = React.memo(() => {
   const [cachedProducts, setCachedProducts] = useState<Product[] | undefined>();
-  const config = useRecoilValue(productQueryState);
+  const [config, setConfig] = useRecoilState(productQueryState);
   const products = useRecoilValueLoadable(productListState);
+  const pageCount = useRecoilValueLoadable(pageCountState);
 
   useEffect(() => {
     if (products.state === 'hasValue') {
       setCachedProducts(products.contents.products);
     }
   }, [products]);
+
+  const handleSetPage = (page: number) => {
+    setConfig((config) => ({ ...config, page }));
+  };
+
+  const renderPagination = () => (
+    <PaginationContainer>
+      {pageCount.state === 'hasValue' ? (
+        <Pagination
+          page={config.page}
+          pageCount={pageCount.contents}
+          onChange={handleSetPage}
+        />
+      ) : (
+        <Pagination page={config.page} pageCount={99999} dummy />
+      )}
+    </PaginationContainer>
+  );
 
   const renderList = () => {
     switch (products.state) {
@@ -74,7 +100,13 @@ const ProductList: React.FC = React.memo(() => {
     }
   };
 
-  return <Container>{renderList()}</Container>;
+  return (
+    <Container>
+      {renderPagination()}
+      {renderList()}
+      {renderPagination()}
+    </Container>
+  );
 });
 
 export default ProductList;

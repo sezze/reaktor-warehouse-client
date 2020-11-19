@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import categories from '../constants/categories';
 import productQueryState from '../store/productQueryState';
 import Category from '../types/Category';
 import { Select, TextInput } from '../styles/input';
 import SelectionArea from './selection-area';
-import Pagination from './pagination';
-import pageCountState from '../store/pageCountState';
 import useLazyCallback from '../hooks/useLazyCallback';
 import displayOptions from '../constants/display-options';
 
@@ -33,14 +31,9 @@ const Cell = styled.div<CellProps>`
   gap: 1ch;
 `;
 
-const Label = styled.label`
-  /* line-height: 1.5rem; */
-`;
-
 const QueryConfig: React.FC = React.memo(() => {
   const [searchInput, setSearchInput] = useState('');
   const [config, setConfig] = useRecoilState(productQueryState);
-  const pageCount = useRecoilValueLoadable(pageCountState);
 
   const setCategory = (category: string) => {
     setConfig({ ...config, category: category as Category });
@@ -55,14 +48,10 @@ const QueryConfig: React.FC = React.memo(() => {
     lazilySetSearch(e.currentTarget.value);
   };
 
-  const handleSetPage = (page: number) => {
-    setConfig((config) => ({ ...config, page }));
-  };
-
   return (
     <Grid>
       <Cell small>
-        <Label>Availability</Label>
+        <label>Availability</label>
         <Select>
           <option>all</option>
           <option>&lt; 10 in stock</option>
@@ -70,7 +59,7 @@ const QueryConfig: React.FC = React.memo(() => {
         </Select>
       </Cell>
       <Cell small>
-        <Label>Display count</Label>
+        <label>Display count</label>
         <Select>
           {displayOptions.map((i) => (
             <option key={i}>{i}</option>
@@ -91,17 +80,6 @@ const QueryConfig: React.FC = React.memo(() => {
           value={config.category}
           onChange={setCategory}
         />
-      </Cell>
-      <Cell>
-        {pageCount.state === 'hasValue' ? (
-          <Pagination
-            page={config.page}
-            pageCount={pageCount.contents}
-            onChange={handleSetPage}
-          />
-        ) : (
-          <Pagination page={config.page} pageCount={99999} dummy />
-        )}
       </Cell>
     </Grid>
   );
