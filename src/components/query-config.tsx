@@ -65,6 +65,10 @@ const QueryConfig: React.FC = React.memo(() => {
     lazilySetSearch(e.currentTarget.value || undefined);
   };
 
+  const handleClearingFocus = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'Enter') e.currentTarget.blur();
+  };
+
   return (
     <Grid>
       <Cell small>
@@ -89,6 +93,7 @@ const QueryConfig: React.FC = React.memo(() => {
           placeholder="Search"
           value={searchInput}
           onChange={handleSearch}
+          onKeyUp={handleClearingFocus}
         />
       </Cell>
       <Cell>
