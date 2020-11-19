@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import colorPreviewPalette from '../constants/color-preview-palette';
+import sizes from '../constants/sizes';
 import Availability from '../types/Availability';
 import Product from '../types/Product';
 import { formatCurrency } from '../utils/formatUtils';
@@ -11,41 +13,82 @@ interface ProductListItemProps {
 
 const ListItem = styled.li`
   display: grid;
-  grid-template-columns: 32px 2fr 4fr 1fr 1fr 2fr;
   align-items: center;
-  height: 1.5rem;
+  height: 2rem;
   padding: 2px 0;
   gap: 1ch;
-`;
+  grid-template-columns: 1rem 100px 1fr;
+  box-sizing: border-box;
+  border-bottom: solid 2px transparent;
 
-const ColorPreview = styled.div`
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  border: solid 2px ${({ theme }) => theme.component.normal};
-  transition: border-radius 0.1s, transform 0.1s;
   &:hover {
-    border-radius: ${({ theme }) => theme.borderRadius};
-    transform: scale(1.1);
+    border-color: ${({ theme }) => theme.component.normal};
+  }
+
+  @media ${sizes.medium} {
+    grid-template-columns: 1rem 100px 3fr 1fr;
+  }
+
+  @media ${sizes.large} {
+    grid-template-columns: 1rem 120px 3fr 100px 1fr;
+  }
+
+  @media ${sizes.extraLarge} {
+    grid-template-columns: 1rem 120px 4fr 100px 1fr 80px;
   }
 `;
 
-const ColorList = styled.div``;
+const ColorPreview = styled.div`
+  width: 0.75rem;
+  height: 1rem;
+  &:first-child:last-child {
+    width: 1rem;
+  }
+`;
 
-const Column = styled.span`
+const ColorList = styled.div`
+  display: inline-flex;
+  width: fit-content;
+  box-shadow: ${({ theme }) => theme.shadow(2)};
+  background-color: ${({ theme }) => theme.shadowColor};
+  border-radius: 99px;
+  overflow: hidden;
+  gap: 0px;
+`;
+
+const AvailabilityColumn = styled.div``;
+
+const NameColumn = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const AlertColumn = styled(Column)`
+const AlertColumn = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const CurrencyColumn = styled(Column)`
-  text-align: right;
+const CurrencyColumn = styled.div`
+  display: none;
+  @media ${sizes.large} {
+    display: block;
+  }
+`;
+
+const ManufacturerColumn = styled.div`
+  display: none;
+  @media ${sizes.medium} {
+    display: block;
+  }
+`;
+
+const ColorColumn = styled.div`
+  display: none;
+  @media ${sizes.extraLarge} {
+    display: flex;
+  }
+  justify-content: center;
 `;
 
 const availabilityColors: Record<Availability, string> = {
@@ -69,15 +112,20 @@ const ProductListItem: React.FC<ProductListItemProps> = ({ product }) => (
         <Alert color={availabilityColors[product.availability]} />
       ) : null}
     </AlertColumn>
-    <Column>{availabilityLabels[product.availability]}</Column>
-    <Column>{product.name}</Column>
+    <AvailabilityColumn>{availabilityLabels[product.availability]}</AvailabilityColumn>
+    <NameColumn>{product.name}</NameColumn>
     <CurrencyColumn>{formatCurrency(product.price)}</CurrencyColumn>
-    <Column>{product.manufacturer}</Column>
-    <ColorList>
-      {product.color.map((c) => (
-        <ColorPreview title={c} style={{ backgroundColor: c }} />
-      ))}
-    </ColorList>
+    <ManufacturerColumn>{product.manufacturer}</ManufacturerColumn>
+    <ColorColumn>
+      <ColorList>
+        {product.color.map((c) => (
+          <ColorPreview
+            title={c}
+            style={{ backgroundColor: colorPreviewPalette[c] ?? c }}
+          />
+        ))}
+      </ColorList>
+    </ColorColumn>
   </ListItem>
 );
 

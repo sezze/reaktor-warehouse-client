@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import categories from '../constants/categories';
-import manufacturersState from '../store/manufacturersState';
 import productQueryState from '../store/productQueryState';
 import Category from '../types/Category';
 import ProductQueryConfg from '../types/ProductQueryConfig';
@@ -10,7 +9,6 @@ import { Select, TextInput } from '../styles/input';
 import SelectionArea from './selection-area';
 import Pagination from './pagination';
 import pageCountState from '../store/pageCountState';
-import Placeholder from '../styles/placeholder';
 
 const Grid = styled.div`
   display: grid;
