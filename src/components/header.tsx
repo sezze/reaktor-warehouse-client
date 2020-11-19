@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
 import sizes from '../constants/sizes';
-import ThemeToggle from './theme-toggle';
 import { useRecoilState } from 'recoil';
 import themeState from '../store/themeState';
 import lightTheme from '../constants/light-theme';
