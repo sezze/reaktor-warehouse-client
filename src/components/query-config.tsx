@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import categories from '../constants/categories';
-import productQueryState from '../store/productQueryState';
-import Category from '../types/Category';
 import { Select, TextInput } from '../styles/input';
-import SelectionArea from './selection-area';
+import productQueryState from '../store/productQueryState';
 import useLazyCallback from '../hooks/useLazyCallback';
 import displayOptions from '../constants/display-options';
+import SelectionArea from './selection-area';
+import categories from '../constants/categories';
+import Category from '../types/Category';
 import Availability from '../types/Availability';
 
 const Grid = styled.div`
@@ -29,7 +29,9 @@ const Cell = styled.div<CellProps>`
   flex-direction: column;
   justify-content: flex-end;
   grid-column: auto / span ${({ small }) => (small ? 1 : 2)};
-  gap: 1ch;
+  label {
+    margin-bottom: 6px;
+  }
 `;
 
 const QueryConfig: React.FC = React.memo(() => {
@@ -65,6 +67,10 @@ const QueryConfig: React.FC = React.memo(() => {
     lazilySetSearch(e.currentTarget.value || undefined);
   };
 
+  const handleClearingFocus = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'Enter') e.currentTarget.blur();
+  };
+
   return (
     <Grid>
       <Cell small>
@@ -89,6 +95,7 @@ const QueryConfig: React.FC = React.memo(() => {
           placeholder="Search"
           value={searchInput}
           onChange={handleSearch}
+          onKeyUp={handleClearingFocus}
         />
       </Cell>
       <Cell>

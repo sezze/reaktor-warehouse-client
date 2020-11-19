@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import productQueryState from '../store/productQueryState';
 import productListState from '../store/productListState';
+import pageCountState from '../store/pageCountState';
 import ProductListItem from './product-list-item';
 import Placeholder from '../styles/placeholder';
 import { range } from '../utils/mathUtils';
 import Product from '../types/Product';
 import Pagination from './pagination';
-import pageCountState from '../store/pageCountState';
 
 const Container = styled.div`
   max-width: 100%;

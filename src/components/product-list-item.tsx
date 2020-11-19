@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import colorPreviewPalette from '../constants/color-preview-palette';
 import sizes from '../constants/sizes';
+import colorPreviewPalette from '../constants/color-preview-palette';
+import { formatCurrency } from '../utils/formatUtils';
 import Availability from '../types/Availability';
 import Product from '../types/Product';
-import { formatCurrency } from '../utils/formatUtils';
 import Alert from './alert';
 
 interface ProductListItemProps {

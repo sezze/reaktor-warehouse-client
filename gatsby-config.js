@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   siteMetadata: {
     title: 'Reaktor Warehouse',
-    description: 'Reactor assignment for 2021 junior positions',
+    description: 'Reaktor assignment for 2021 junior positions',
     author: '@sezze',
   },
   plugins: [
@@ -23,8 +23,8 @@ module.exports = {
         name: 'gatsby-starter-default',
         short_name: 'starter',
         start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
+        background_color: '#194d5e',
+        theme_color: '#194d5e',
         display: 'minimal-ui',
         icon: 'src/images/site-icon.png', // This path is relative to the root of the site.
       },
