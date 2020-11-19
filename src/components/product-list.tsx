@@ -30,6 +30,13 @@ const GhostContainer = styled.div`
   opacity: 0.7;
 `;
 
+const Info = styled.div`
+  margin: 4rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const renderProductList = (products: Product[]) => (
   <List>
     {products.map((p) => (
@@ -87,7 +94,7 @@ const ProductList: React.FC = React.memo(() => {
         return products.contents.products.length > 0 ? (
           renderProductList(products.contents.products)
         ) : (
-          <span>🕵️‍♀️ No products matched your search criteria</span>
+          <Info>🕵️‍♀️ No products matched your search criteria</Info>
         );
       case 'loading':
         return cachedProducts && cachedProducts.length > 0 ? (
@@ -96,7 +103,7 @@ const ProductList: React.FC = React.memo(() => {
           renderPlaceholderList(config.displayCount)
         );
       case 'hasError':
-        return <div>😢 An error occurred.</div>;
+        return <Info>😢 An error occurred.</Info>;
     }
   };
 
